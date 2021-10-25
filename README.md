@@ -18,7 +18,7 @@ The program was written in Python 3.8.8. To run the program, ensure you have Pyt
 
     * First, enter the grid size of Mars as two integers separated by a space. Example input: `4 8`.
 
-    * Then, enter the initial position of your first robot as two integers and an orientation. The orientation should be a string, either `N`, `E`, `S` or `W`. Example input: `2 3 E`.
+    * Then, enter the initial position of your first robot as two integers and an orientation. The orientation should be a letter, either `N`, `E`, `S` or `W`. Example input: `2 3 E`.
 
     * Now enter the series of movement commands for your robot. The available commands are `F` (forward), `R` (turn right) or `L` (turn left). Example input: `LFRFF`.
 
