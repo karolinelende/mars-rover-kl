@@ -12,18 +12,22 @@ def move_one(init_pos,instruction):
     :rtype: list of int, int, str
     """
     
+    # Extract initial positions
     x_init = init_pos[0]
     y_init = init_pos[1]
     orient_init = init_pos[2]
 
+    # Define dictionaries to map movements for different orientations
     moveF_dict = {"N":[0,1],"E":[1,0],"S":[0,-1],"W":[-1,0]}
     moveR_dict = {"N":"E","E":"S","S":"W","W":"N"}
     moveL_dict = {"N":"W","W":"S","S":"E","E":"N"}
 
+    # Check orientation input
     if orient_init not in moveF_dict.keys():
         print("Position invalid, should be one of N, E, S, W")
         return
 
+    # Update position
     if instruction == "F":
         orient = orient_init
         x = x_init + moveF_dict[orient][0]
@@ -68,7 +72,7 @@ def moving_robots(m,n,init_pos,instructions):
             end_pos.append('LOST')
             break
         elif end_pos[1] > n:
-            end_pos[0] = m
+            end_pos[0] = n
             end_pos.append('LOST')
             break
         elif end_pos[0] < 0:
@@ -85,11 +89,11 @@ def moving_robots(m,n,init_pos,instructions):
     return end_pos
 
 def convert_inputs(user_input):
-    """Convert a user input to a valid list of int and str.
+    """Convert a user input to a valid list of int and/or str.
 
     :param user_input: user input
     :type user_input: str
-    :return: valid list of int and str
+    :return: valid list of int and/or str
     :rtype: list
     """
     output_list = []
@@ -104,15 +108,20 @@ def convert_inputs(user_input):
 # ---------------- Deploy functions -------- #
 
 # When the script is run the user is prompted for a set of inputs to complete the Mars Rover calculations.
-
 input_grid = input("Input the grid size as two numbers separated by a space: ")
 grid_size = convert_inputs(input_grid)
+m = grid_size[0]
+n = grid_size[1]
 
 i = 1
 
 while i < 10:
     user_input_pos = input("Input the initial position as two numbers and a letter each separated by a space: ")
     input_pos = convert_inputs(user_input_pos)
+    # Check position is within grid
+    if input_pos[0] > m or input_pos[1] > n:
+        print("Error: The robot's inital position is outside the grid.")
+        break
     
     input_instructions = input("Input the instructions as a sequence of F, L, R (e.g. FFRLF): ")
     
