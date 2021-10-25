@@ -1,5 +1,16 @@
 
+# -------------- Functions --------------- #
+
 def move_one(init_pos,instruction):
+    """Calculate the updated the position of a robot based on an initial position and one instruction.
+
+    :param init_pos: initial position in the form [x, y, orientation]
+    :type init_pos: list of int, int, str
+    :param instruction: movement command, either F, R or L
+    :type instruction: str
+    :return: updated position after movement completed
+    :rtype: list of int, int, str
+    """
     
     x_init = init_pos[0]
     y_init = init_pos[1]
@@ -33,6 +44,20 @@ def move_one(init_pos,instruction):
 
 
 def moving_robots(m,n,init_pos,instructions):
+    """Calculate the movement of a robot across a grid based on an initial position and a set of instructions.
+    If robot moves off the grid the last valid position is recorded and the robot is marked as lost.
+
+    :param m: size of grid in the x-direction
+    :type m: int
+    :param n: size of grid in the y-direction
+    :type n: int
+    :param init_pos: initial position of robot in the form [x, y, orientation]
+    :type init_pos: list of int, int, str
+    :param instructions: sequence of movement commands (combination of F,L,R)
+    :type instructions: str
+    :return: end position 
+    :rtype: list of int, int, str
+    """
 
     for instruction in instructions:
         end_pos = move_one(init_pos,instruction)
@@ -60,6 +85,13 @@ def moving_robots(m,n,init_pos,instructions):
     return end_pos
 
 def convert_inputs(user_input):
+    """Convert a user input to a valid list of int and str.
+
+    :param user_input: user input
+    :type user_input: str
+    :return: valid list of int and str
+    :rtype: list
+    """
     output_list = []
     for x in user_input.split():
         try:
@@ -69,23 +101,27 @@ def convert_inputs(user_input):
         output_list.append(x)
     return output_list
 
+# ---------------- Deploy functions -------- #
 
-input_1 = input("Input the grid size as two numbers separated by a space: ")
-grid_size = convert_inputs(input_1)
+# When the script is run the user is prompted for a set of inputs to complete the Mars Rover calculations.
 
-input_2 = input("Input the first initial position as two numbers and a letter each separated by a space: ")
-init_pos = convert_inputs(input_2)
+input_grid = input("Input the grid size as two numbers separated by a space: ")
+grid_size = convert_inputs(input_grid)
 
-input_3 = input("Input the instructions as a sequence of F, L, R: ")
+i = 1
 
-output_1 = moving_robots(grid_size[0],grid_size[1],init_pos,input_3)
-print(output_1)
+while i < 10:
+    user_input_pos = input("Input the initial position as two numbers and a letter each separated by a space: ")
+    input_pos = convert_inputs(user_input_pos)
+    
+    input_instructions = input("Input the instructions as a sequence of F, L, R (e.g. FFRLF): ")
+    
+    output = moving_robots(grid_size[0],grid_size[1],input_pos,input_instructions)
+    print(output)
 
-input_4 = input("Input the second initial position as two numbers and a letter each separated by a space: ")
-init_pos = convert_inputs(input_4)
+    inputs_open = input("To enter another input press return, to end press x + return: ")
+    if inputs_open =="x":
+        break
 
-input_5 = input("Input the instructions as a sequence of F, L, R: ")
-
-output_2 = moving_robots(grid_size[0],grid_size[1],init_pos,input_5)
-print(output_2)
+    i += 1
 
